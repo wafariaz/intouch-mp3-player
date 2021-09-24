@@ -163,6 +163,13 @@ function (_React$Component) {
         loading: true
       });
       this.sound.once("load", function () {
+
+        var __trackDuration;
+        if(_this2.sound._duration === Infinity){
+          __trackDuration = _this2.sound.seek()
+        }else{
+          __trackDuration = _this2.sound._duration
+        }
         _this2.setState({
           loading: false
         });
@@ -173,15 +180,16 @@ function (_React$Component) {
           _this2.setProgressIndicator(_this2.progressRef.current.clientWidth);
 
           _this2.setState({
-            currentTime: _this2.state.trackDuration,
+            currentTime: __trackDuration,
             isPlaying: false,
             isPaused: true
           });
         });
 
         _this2.sound.on("play", function (evt) {
+         
           _this2.setState({
-            trackDuration: _this2.sound._duration,
+            trackDuration: __trackDuration,
             isPlaying: true,
             isPaused: false
           }, function () {
@@ -286,7 +294,11 @@ function (_React$Component) {
   }, {
     key: "progressClicked",
     value: function progressClicked(evt) {
-      return;
+
+      if(this.state.trackDuration === 0){
+        return;
+      }
+
       var _this6 = this;
 
       if (!this.sound) {
