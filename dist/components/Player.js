@@ -286,6 +286,7 @@ function (_React$Component) {
   }, {
     key: "progressClicked",
     value: function progressClicked(evt) {
+      return;
       var _this6 = this;
 
       if (!this.sound) {
